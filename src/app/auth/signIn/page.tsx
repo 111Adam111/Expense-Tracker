@@ -12,6 +12,7 @@ import { Typography, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export function Copyright(props: any) {
   return (
@@ -34,18 +35,25 @@ export function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const email = React.useRef("");
-  const password = React.useRef("");
+  const router = useRouter();
+  const [loginError, setLoginError] = React.useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     const login = await signIn("credentials", {
       username: data.get("email"),
       password: data.get("password"),
-      redirect: true,
-      callbackUrl: "/",
+      redirect: false,
     });
+
+    if (login && login.error) {
+      setLoginError(true);
+    } else {
+      setLoginError(false);
+      router.push("/");
+    }
   };
 
   return (
@@ -92,6 +100,7 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
+            {loginError && <p>Email or password are not correct</p>}
 
             <Button
               type="submit"
