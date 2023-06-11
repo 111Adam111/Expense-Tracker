@@ -14,20 +14,41 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Copyright } from "../signIn/page";
-
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { waitForDebugger } from "inspector";
 
 const defaultTheme = createTheme();
 
-export default async function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+export default function SignUp() {
+  const [responseMSG, setResponseMSG] = React.useState("");
+  const router = useRouter();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      name: data.get("name"),
-      allowEmails: data.get("allowEmails"),
-    });
+    try {
+      const response = await axios.post("http://localhost:3000/api/user", {
+        email: data.get("email"),
+        password: data.get("password"),
+        name: data.get("name"),
+        allowEmails: Boolean(data.get("allowEmails")),
+      });
+      setResponseMSG("Account created.");
+      console.log({
+        email: data.get("email"),
+        password: data.get("password"),
+        name: data.get("name"),
+        allowEmails: Boolean(data.get("allowEmails"))
+      });
+
+      setTimeout(() => {
+        router.push("/auth/signIn");
+      }, 1000);
+    } catch (error) {
+      setResponseMSG("Account with this email address already exist.");
+      console.log(error);
+    }
   };
 
   return (
@@ -57,12 +78,11 @@ export default async function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  autoComplete="given-name"
-                  name="Username"
+                  name="name"
                   required
                   fullWidth
-                  id="Username"
-                  label="Username"
+                  id="name"
+                  label="Name"
                   autoFocus
                 />
               </Grid>
@@ -108,6 +128,7 @@ export default async function SignUp() {
             >
               Sign Up
             </Button>
+            <Typography variant="body1">{responseMSG}</Typography>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="./signIn" variant="body2">

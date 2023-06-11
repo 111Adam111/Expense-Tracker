@@ -100,7 +100,11 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            {loginError && <p>Email or password are not correct</p>}
+            {loginError && (
+              <Typography variant="body1">
+                Email or password are not correct
+              </Typography>
+            )}
 
             <Button
               type="submit"

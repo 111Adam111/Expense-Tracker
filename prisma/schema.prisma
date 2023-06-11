@@ -12,6 +12,7 @@ model User {
   email String  @unique
   name  String
   password String
+  allowEmails Boolean @default(false)
   Records Record[]
 }
 
@@ -28,3 +29,4 @@ model Record {
 
 
 // npx prisma migrate dev
+// npx prisma studio
