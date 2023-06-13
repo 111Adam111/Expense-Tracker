@@ -12,16 +12,17 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+import WalletSharpIcon from '@mui/icons-material/WalletSharp';
 
 import { signOut, signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-const pages = ["Products", "Pricing", "About"];
+const pages = ["Dashboard", "Pricing", "About"];
 const settings = ["Profile", "Dashboard", "Logout"];
 
 function Navbar() {
   const { data: session } = useSession();
-  console.log(session)
+  const router = useRouter();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -45,16 +46,26 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
+  const handleNavMenuItems = (page: string) => {
+    handleCloseNavMenu();
+    if (page === "Dashboard") {
+      console.log('xd')
+
+      router.push("/Dashboard");
+    } 
+  };
+
   const handleUserMenuItems = (setting: string) => {
     handleCloseUserMenu();
     if (setting === "Logout") signOut();
+    if (setting === "Dashboard") router.push("/Dashboard");
   };
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <WalletSharpIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -70,7 +81,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            SpendTrackr
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -103,18 +114,21 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem
+                  key={page}
+                  onClick={() => handleNavMenuItems(page)}
+                >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <WalletSharpIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -126,13 +140,13 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            SpendTrackr
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleNavMenuItems(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}

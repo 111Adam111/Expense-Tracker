@@ -15,7 +15,7 @@ export async function GET(
     );
   }
 
-  const userPosts = await prisma.record.findMany({
+  const records = await prisma.record.findMany({
     where: { ownerId: +params.id },
     include: {
       owner: {
@@ -27,5 +27,5 @@ export async function GET(
     },
   });
 
-  return new Response(JSON.stringify(userPosts));
+  return new Response(JSON.stringify(records));
 }

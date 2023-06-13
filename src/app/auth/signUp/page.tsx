@@ -16,7 +16,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Copyright } from "../signIn/page";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { waitForDebugger } from "inspector";
 
 const defaultTheme = createTheme();
 
@@ -35,13 +34,6 @@ export default function SignUp() {
         allowEmails: Boolean(data.get("allowEmails")),
       });
       setResponseMSG("Account created.");
-      console.log({
-        email: data.get("email"),
-        password: data.get("password"),
-        name: data.get("name"),
-        allowEmails: Boolean(data.get("allowEmails"))
-      });
-
       setTimeout(() => {
         router.push("/auth/signIn");
       }, 1000);

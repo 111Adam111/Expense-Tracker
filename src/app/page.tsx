@@ -1,10 +1,8 @@
-import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (
     <main>
-      <Navbar/>
+      Track your spendings and unlock your financial potential!
     </main>
   );
 }
-
