@@ -11,7 +11,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Typography, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export function Copyright(props: any) {
@@ -36,6 +36,7 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [loginError, setLoginError] = React.useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -48,11 +49,11 @@ export default function SignIn() {
       redirect: false,
     });
 
-    if (login && login.error) {
-      setLoginError(true);
-    } else {
+    if (login && !login.error) {
       setLoginError(false);
       router.push("/");
+    } else {
+      setLoginError(true);
     }
   };
 
@@ -101,9 +102,11 @@ export default function SignIn() {
               autoComplete="current-password"
             />
             {loginError && (
-              <Typography variant="body1">
-                Email or password are not correct
-              </Typography>
+              <Grid container justifyContent="center">
+                <Typography variant="body1">
+                  Incorrect credentials. Try again.
+                </Typography>
+              </Grid>
             )}
 
             <Button

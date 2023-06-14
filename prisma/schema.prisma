@@ -18,6 +18,7 @@ model User {
 
 model Record {
   id        Int     @id @default(autoincrement())
+  // date
   name     String
   amount    Float
   category String

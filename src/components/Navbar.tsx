@@ -12,16 +12,37 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import WalletSharpIcon from '@mui/icons-material/WalletSharp';
+import WalletSharpIcon from "@mui/icons-material/WalletSharp";
 
 import { signOut, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const pages = ["Dashboard", "Pricing", "About"];
 const settings = ["Profile", "Dashboard", "Logout"];
 
 function Navbar() {
-  const { data: session } = useSession();
+  const { data } = useSession();
+  interface SessionData {
+    user: {
+      name: string;
+      email: string;
+      sub: string;
+      id: number;
+      iat: number;
+      jti: string;
+      accessToken: string;
+    };
+    expires: string;
+  }
+
+  const [session, setSession] = React.useState<SessionData | null>(null);
+  React.useEffect(() => {
+    if (data) {
+      setSession(data as SessionData);
+      localStorage.setItem("session", JSON.stringify(data));
+    }
+  }, [data]);
   const router = useRouter();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -49,10 +70,10 @@ function Navbar() {
   const handleNavMenuItems = (page: string) => {
     handleCloseNavMenu();
     if (page === "Dashboard") {
-      console.log('xd')
+      console.log("xd");
 
       router.push("/Dashboard");
-    } 
+    }
   };
 
   const handleUserMenuItems = (setting: string) => {
@@ -65,24 +86,27 @@ function Navbar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <WalletSharpIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            SpendTrackr
-          </Typography>
+          <WalletSharpIcon
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+          />
+          <div onClick={() => router.push("/")} style={{ cursor: "pointer" }}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              SpendTrackr
+            </Typography>
+          </div>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -114,16 +138,15 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem
-                  key={page}
-                  onClick={() => handleNavMenuItems(page)}
-                >
+                <MenuItem key={page} onClick={() => handleNavMenuItems(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <WalletSharpIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <WalletSharpIcon
+            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+          />
           <Typography
             variant="h5"
             noWrap

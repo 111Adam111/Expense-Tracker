@@ -16,6 +16,7 @@ const Dashboard = () => {
 
   const getData = async () => {
     if (session) {
+      console.log(session)
       const { data } = await axios.get(
         `http://localhost:3000/api/user/${session.user.id}`,
         {
