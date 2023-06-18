@@ -23,7 +23,7 @@ export function Copyright(props: any) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="">
         Your Website
       </Link>{" "}
       {new Date().getFullYear()}
@@ -51,7 +51,7 @@ export default function SignIn() {
 
     if (login && !login.error) {
       setLoginError(false);
-      router.push("/");
+      router.push("/../Dashboard");
     } else {
       setLoginError(true);
     }
