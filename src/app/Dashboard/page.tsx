@@ -1,21 +1,26 @@
-import { useSession } from "next-auth/react";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
-import { fetchData } from "next-auth/client/_utils";
-import DataTable from "./components/DataTable";
+"use client"
+import { useSession } from 'next-auth/react';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { fetchData } from '@/features/counter/transactionSlice';
+import DataTable from './components/DataTable';
 
 const Dashboard = () => {
   const { data: session } = useSession();
+  const dispatch = useAppDispatch();
+  const data = useAppSelector((state) => state.transactions.data);
+  const loading = useAppSelector((state) => state.transactions.loading);
+  const error = useAppSelector((state) => state.transactions.error);
 
-  const dispatch = useDispatch();
-  const data = useSelector((state: RootState) => state.transactions.data); // Update state slice name
-  const loading = useSelector((state: RootState) => state.transactions.loading); // Update state slice name
-  const error = useSelector((state: RootState) => state.transactions.error); // Update state slice name
+
+  const headers = {
+    auth: session?.user.accessToken,
+    "Content-Type": "application/json",
+  };
 
   useEffect(() => {
     if (session?.user.id) {
-      dispatch(fetchData(session?.user.id));
+      dispatch(fetchData({session}));
     }
   }, [dispatch, session?.user.id]);
 
@@ -23,7 +28,6 @@ const Dashboard = () => {
     return (
       <>
         <p>Signed in as {session.user.email}</p>
-        <DataTable />
       </>
     );
   } else {

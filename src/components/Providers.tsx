@@ -10,9 +10,12 @@ interface Props {
 
 const Providers = ({ children }: Props) => {
   return (
+    <SessionProvider>
+
     <Provider store={store}>
-      <SessionProvider>{children}</SessionProvider>
+      {children}
     </Provider>
+    </SessionProvider>
   );
 };
 
