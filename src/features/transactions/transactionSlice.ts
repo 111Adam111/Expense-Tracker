@@ -2,16 +2,19 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export type Transactions = {
+  id : number;
   name: string;
   amount: number;
   category: string;
+  owner: {
+    email: string;
+    name: string;
+  }
 };
 
 export const fetchData = createAsyncThunk<Transactions, { session: any }>(
   "transactions/fetchData",
   async ({ session }) => {
-    console.log("session:", session);
-    console.log("session.user:", session?.user);
     const headers = {
       auth: session?.user.accessToken,
       "Content-Type": "application/json",
@@ -23,7 +26,6 @@ export const fetchData = createAsyncThunk<Transactions, { session: any }>(
         headers,
       }
     );
-    console.log(response.data);
     return response.data;
   }
 );
