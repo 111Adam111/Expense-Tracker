@@ -10,21 +10,18 @@ const Dashboard = () => {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
 
-
   useEffect(() => {
     if (session?.user.id) {
       dispatch(fetchData({ session }));
     }
   }, [dispatch, session?.user.id]);
 
- 
-    return (
-      <>
-        <p>Signed in as {session?.user.email}</p>
-        <DataTable/>
-      </>
-    );
- 
+  return (
+    <>
+      <p>Signed in as {session?.user.email}</p>
+      <DataTable />
+    </>
+  );
 };
 
 export default Dashboard;
