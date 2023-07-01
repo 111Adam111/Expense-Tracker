@@ -11,13 +11,9 @@ interface Props {
 const Providers = ({ children }: Props) => {
   return (
     <SessionProvider>
-
-    <Provider store={store}>
-      {children}
-    </Provider>
+      <Provider store={store}>{children}</Provider>
     </SessionProvider>
   );
 };
 
 export default Providers;
-  

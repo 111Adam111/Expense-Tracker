@@ -70,8 +70,6 @@ function Navbar() {
   const handleNavMenuItems = (page: string) => {
     handleCloseNavMenu();
     if (page === "Dashboard") {
-      console.log("xd");
-
       router.push("/Dashboard");
     }
   };
