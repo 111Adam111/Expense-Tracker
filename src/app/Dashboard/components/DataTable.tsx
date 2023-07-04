@@ -32,7 +32,7 @@ export default function DataTable() {
   const loading = useAppSelector((state) => state.transactions.loading);
   const error = useAppSelector((state) => state.transactions.error);
   if (error) {
-    signOut();
+    // signOut();
     return <p>Error: {error}. Please re login.</p>;
   }
   return (

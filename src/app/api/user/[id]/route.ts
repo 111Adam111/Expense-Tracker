@@ -14,7 +14,6 @@ export async function GET(
       { status: 401 }
     );
   }
-
   const records = await prisma.record.findMany({
     where: { ownerId: +params.id },
     include: {
@@ -23,9 +22,24 @@ export async function GET(
           email: true,
           name: true,
         },
-      },
+      }
     },
   });
-
   return new Response(JSON.stringify(records));
 }
+
+
+
+
+
+// const records = await prisma.user.findUnique({
+//   where: { id: params.id },
+//   include: {
+//     records: {
+//       include: {
+//         category: true,
+//       },
+//     },
+//     categories: true,
+//   } as any,
+// });

@@ -4,22 +4,32 @@ import { Doughnut } from "react-chartjs-2";
 
 const DoughnutChart = () => {
   const data = useAppSelector((state) => state.transactions.data);
-  console.log(data)
-  let amounts: number[] = []
-  let categories: string[] = []
-  data?.forEach(record => {
-    amounts.push(record.amount)
-    categories.push(record.category)
+
+  const categories: string[] = [];
+  const categoryAmounts: { [key: string]: number } = {};
+
+  data?.forEach((record) => {
+    const { category, amount } = record;
+
+    if (categoryAmounts[category]) {
+      categoryAmounts[category] += amount;
+    } else {
+      categoryAmounts[category] = amount;
+      categories.push(category);
+    }
   });
-  console.log(amounts)
+
+  const amounts: number[] = categories.map((category) => categoryAmounts[category]);
+
+
   return (
-    <div style={{ width: "400px", height: "400px", margin: "10px" }}>
+    <div style={{ width: "20rem", height: "20rem", margin: "10px" }}>
       <Doughnut
         options={{
           responsive: true,
           plugins: {
             legend: {
-              position: "bottom",
+              position: "bottom", 
             },
           },
         }}

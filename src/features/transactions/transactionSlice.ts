@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export type Transaction = {
+type Transaction = {
   id: number;
   name: string;
   amount: number;
