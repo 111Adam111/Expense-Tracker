@@ -1,5 +1,7 @@
+"use client";
 import Navbar from "@/components/Navbar";
 import Providers from "../components/Providers";
+import { Container } from "@mui/material";
 
 export const metadata = {
   title: "Expanse tracker",
@@ -16,7 +18,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <Navbar />
-          {children}
+          <Container maxWidth="lg">{children}</Container>
         </Providers>
       </body>
     </html>

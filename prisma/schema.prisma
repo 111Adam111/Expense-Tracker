@@ -21,9 +21,9 @@ model Record {
   // date
   name     String
   amount    Float
-  category String
+  category String   @default("others")
   owner    User    @relation(fields: [ownerId], references: [id])
-  ownerId  Int
+  ownerId  Int     @default(7)
 }
 
 

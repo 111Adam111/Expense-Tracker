@@ -1,16 +1,17 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export type Transactions = {
-  id : number;
+type Transaction = {
+  id: number;
   name: string;
   amount: number;
   category: string;
   owner: {
     email: string;
     name: string;
-  }
+  };
 };
+export type Transactions = Transaction[];
 
 export const fetchData = createAsyncThunk<Transactions, { session: any }>(
   "transactions/fetchData",

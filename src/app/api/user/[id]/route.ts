@@ -1,6 +1,8 @@
 import { verifyJwt } from "@/lib/jwt";
 import prisma from "@/lib/prisma";
 
+import { PrismaClient } from '@prisma/client';
+
 export async function GET(
   request: Request,
   { params }: { params: { id: number } }
@@ -15,8 +17,10 @@ export async function GET(
     );
   }
 
+
+
   const records = await prisma.record.findMany({
-    where: { ownerId: +params.id },
+    where: { ownerId: +params.id } as any,
     include: {
       owner: {
         select: {
@@ -24,7 +28,7 @@ export async function GET(
           name: true,
         },
       },
-    },
+    } as any,
   });
 
   return new Response(JSON.stringify(records));

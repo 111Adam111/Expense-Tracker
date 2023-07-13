@@ -70,8 +70,6 @@ function Navbar() {
   const handleNavMenuItems = (page: string) => {
     handleCloseNavMenu();
     if (page === "Dashboard") {
-      console.log("xd");
-
       router.push("/Dashboard");
     }
   };
@@ -84,7 +82,7 @@ function Navbar() {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Toolbar disableGutters>
           <WalletSharpIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
