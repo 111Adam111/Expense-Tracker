@@ -8,13 +8,15 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String
-  password String
-  allowEmails Boolean @default(false)
-  Records Record[]
+  id          Int        @id @default(autoincrement())
+  email       String     @unique
+  name        String
+  password    String
+  allowEmails Boolean    @default(false)
+  records     Record[]
 }
+
+
 
 model Record {
   id        Int     @id @default(autoincrement())
@@ -25,6 +27,9 @@ model Record {
   owner    User    @relation(fields: [ownerId], references: [id])
   ownerId  Int     @default(7)
 }
+
+
+
 
 
 

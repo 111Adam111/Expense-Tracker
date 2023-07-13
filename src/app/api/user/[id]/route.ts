@@ -28,6 +28,29 @@ export async function GET(
       },
     } as any,
   });
-
   return new Response(JSON.stringify(records));
 }
+
+// const records = await prisma.user.findUnique({
+//   where: { id: params.id },
+//   include: {
+//     records: {
+//       include: {
+//         category: true,
+//       },
+//     },
+//     categories: true,
+//   } as any,
+// });
+
+// const records = await prisma.record.findMany({
+//   where: { ownerId: +params.id },
+//   include: {
+//     owner: {
+//       select: {
+//         email: true,
+//         name: true,
+//       },
+//     }
+//   },
+// });

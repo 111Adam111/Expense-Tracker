@@ -27,6 +27,7 @@ export const fetchData = createAsyncThunk<Transactions, { session: any }>(
         headers,
       }
     );
+    
     return response.data;
   }
 );
