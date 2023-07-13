@@ -1,8 +1,6 @@
 import { verifyJwt } from "@/lib/jwt";
 import prisma from "@/lib/prisma";
 
-import { PrismaClient } from '@prisma/client';
-
 export async function GET(
   request: Request,
   { params }: { params: { id: number } }
