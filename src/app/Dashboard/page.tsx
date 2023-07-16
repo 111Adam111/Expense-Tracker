@@ -7,7 +7,8 @@ import { useAppDispatch } from "@/app/hooks";
 import { fetchData } from "@/features/transactions/transactionSlice";
 import DataTable from "./components/DataTable";
 import DoughnutChart from "./components/DoughnutChart";
-// import BarChart from "./components/BarChart";
+import { Box } from "@mui/material";
+import Summary from "./components/Summary";
 
 const Dashboard = () => {
   const { data: session } = useSession();
@@ -21,8 +22,10 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* <BarChart /> */}
-      <DoughnutChart />
+      <Box display={"flex"} justifyContent={"space-between"}>
+        <Summary />
+        <DoughnutChart />
+      </Box>
       <DataTable />
     </>
   );

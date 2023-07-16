@@ -82,7 +82,7 @@ function Navbar() {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Toolbar disableGutters>
           <WalletSharpIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}

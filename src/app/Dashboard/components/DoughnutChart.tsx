@@ -1,6 +1,10 @@
 import { useAppSelector } from "@/app/hooks";
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Box } from "@mui/material";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DoughnutChart = () => {
   const data = useAppSelector((state) => state.transactions.data);
@@ -19,17 +23,28 @@ const DoughnutChart = () => {
     }
   });
 
-  const amounts: number[] = categories.map((category) => categoryAmounts[category]);
-
+  const amounts: number[] = categories.map(
+    (category) => categoryAmounts[category]
+  );
 
   return (
-    <div style={{ width: "20rem", height: "20rem", margin: "10px" }}>
+    <Box
+      sx={{
+        margin: 1,
+        padding: 1,
+        borderRadius: 5,
+        backgroundColor: "primary.main",
+        "&:hover": {
+          backgroundColor: "primary.light",
+        },
+      }}
+    >
       <Doughnut
         options={{
           responsive: true,
           plugins: {
             legend: {
-              position: "bottom", 
+              position: "bottom",
             },
           },
         }}
@@ -39,11 +54,16 @@ const DoughnutChart = () => {
             {
               data: amounts,
               borderWidth: 1,
+              backgroundColor: [
+                "rgb(255, 99, 132)",
+                "rgb(54, 162, 235)",
+                "rgb(255, 205, 86)",
+              ],
             },
           ],
         }}
       />
-    </div>
+    </Box>
   );
 };
 
